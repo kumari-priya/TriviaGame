@@ -7,131 +7,169 @@ $(document).ready(function() {
     var totalQuestions = 0;
     var questionsAnswered = 0;
     var questionDiv;
-    var showQuestion;
+    var showTimer;
+    var rightAnswer;
+    var clockRunning = false;
+    var time = 30;
 
 
+    // Get the htm elements
+    questionDiv = $("#questionDiv");
+    resultDiv = $("#resultDiv");
+    option1 = $("#option1");
+    option2 = $("#option2");
+    option3 = $("#option3");
+    option4 = $("#option4");
+    question = $("#question");
+
+    // Questions Array
     var questions = [{
-    question: "In Aladdin, what is the name of Jasmine's pet tiger?",
-    choices: ["Rajah", "Bo", "Iago", "Jack" ],
-    images:  ["../images/Rajah.gif"],
-    answer: "Rajah"
-    }, {
-    question:"In Peter Pan, Captain Hook had a hook on which part of his     body?",
-    choices: ["Right Foot", "Left Hand", "Left Foot", "Right Hand"],
-    answer: "Left Hand"
+            question: "In Aladdin, what is the name of Jasmine's pet tiger?",
+            choices: ["Rajah", "Bo", "Iago", "Jack"],
+            images: ["../images/Rajah.gif"],
+            answer: "Rajah"
+        }, {
+            question: "In Peter Pan, Captain Hook had a hook on which part of his     body?",
+            choices: ["Right Foot", "Left Hand", "Left Foot", "Right Hand"],
+            answer: "Left Hand"
 
-    }, {
-    question:"In the Lion King, where does Mufasa and his family live?",
-    choices: ["Rocky Mountain", "Forest", "Desert", "Pride Rock"],
-    answer: "Pride Rock"
+        }, {
+            question: "In the Lion King, where does Mufasa and his family live?",
+            choices: ["Rocky Mountain", "Forest", "Desert", "Pride Rock"],
+            answer: "Pride Rock"
 
-    }, {
-    question:"In Beauty and the Beast, how many eggs does Gaston eat for    breakfast?",
-    choices: ["2 Dozen", "5 Dozen", "5000", "0"],
-    answer: "5 Dozen"
+        }, {
+            question: "In Beauty and the Beast, how many eggs does Gaston eat for    breakfast?",
+            choices: ["2 Dozen", "5 Dozen", "5000", "0"],
+            answer: "5 Dozen"
 
-    }, {
-    question:"In Alice in Wonderland, what is the name of Alice’s kitten?",
-    choices: ["Dinah", "Sammie", "Kat", "Luna"],
-    answer: "Dinah"
+        }, {
+            question: "In Alice in Wonderland, what is the name of Alice’s kitten?",
+            choices: ["Dinah", "Sammie", "Kat", "Luna"],
+            answer: "Dinah"
 
-     }, {
-    question:"After being on earth, where did Hercules first meet his   father Zeus?",
-    choices: ["Mount Olympus", "Greece", "In the Temple of Zeus", "Elysian   Fields"],
-    answer: "In the Temple of Zeus"
+        }, {
+            question: "After being on earth, where did Hercules first meet his   father Zeus?",
+            choices: ["Mount Olympus", "Greece", "In the Temple of Zeus", "Elysian   Fields"],
+            answer: "In the Temple of Zeus"
 
-    }, {
-    question:"During the ballroom scene of Beauty & the Beast, what color is Belle’s Gown?",
-    choices: ["Yellow", "Blue", "Gold", "White"],
-    answer: "Gold"
+        }, {
+            question: "During the ballroom scene of Beauty & the Beast, what color is Belle’s Gown?",
+            choices: ["Yellow", "Blue", "Gold", "White"],
+            answer: "Gold"
 
-    }, {
-    question:"In Bambi, what word does the owl use to describe falling in love?",
-    choices: ["Whimsical", "Miserable", "Joyful", "Twitterpatted"],
-    answer: "Twitterpatted"
+        }, {
+            question: "In Bambi, what word does the owl use to describe falling in love?",
+            choices: ["Whimsical", "Miserable", "Joyful", "Twitterpatted"],
+            answer: "Twitterpatted"
 
-    }
+        }
 
     ];
 
     // Get the total number of questions
-    totalQuestions =   questions.length;
+    totalQuestions = questions.length;
 
     // Create and add event listeners for questions
     function initialiseQuestions(questionsArray) {
+        var currentQuestion = questionsArray[questionsAnswered];
+        // Add question
+        question.text(currentQuestion.question);
+        // Add answere
+        questionDiv.attr("data-answer", currentQuestion.answer);
+        // Add options
+        option1.text(currentQuestion.choices[0]);
+        option2.text(currentQuestion.choices[1]);
+        option3.text(currentQuestion.choices[2]);
+        option4.text(currentQuestion.choices[3]);
 
-      // Create a variable named questionDiv
-      questionDiv = $("#questionDiv");
+        $('.options').on('click', function() {
+          clearInterval(showTimer);
 
-      // Give each "playerBox" a class "player-box"
-      questionDiv.addClass("player-box");
+            var str1 = $(this).text();
+            var str2 = questionDiv.attr("data-answer");
+            if (str1 == str2) {
+                winCount++;
+                rightAnswer = true;
+            } else {
+                lossCount++;
+                rightAnswer = false;
+            }
+            showResult(rightAnswer);
+        });
+        showTimer =  setInterval(countDown, 1000);
 
-      // Add question
-      var questionText = $("<h6>");
-      questionText.text(questionsArray.question);
-      questionDiv.append(questionText);
+        console.log(rightAnswer);
+        time = 30;
 
-      // Add answere
-questionDiv.data("answer",questionsArray.answer);
-      // Add options
-      for (var i = 0; i < questionsArray.choices.length; i++) {
-    var optionsDiv = $("<div>");
-    options.text(questionsArray.choices[i]);
-    questionDiv.append(options);
-    optionsDiv.on("click", function() {
-if (optionsDiv.text == questionDiv.data("answer")) {
-  winCount++;
-}
-else{
-  lossCount++;
-}
-questionsAnswered++;
-      });
-      }
     }
-
-    showQuestion = setInterval(initialiseQuestions(questions[0]),0, 20000);
-
-
-
-
-
+initialiseQuestions(questions);
 
     // Reset function
     $("#btnReset").on("click", function() {
         resetGame()
-
     });
 
-function showResult(result){
-  // All the questions got answered
-  if(questionsAnswered==questions.length)
-  {
-    questionDiv.text = "won" + winCount + "lost" +lossCount;
-      clearInterval(showQuestion);
-  }
-  // Game is still on
-  else{
-    if(result){
-      questionDiv.text = "won";
+    function showResult(result) {
+
+        // All the questions got answered
+        if (questionsAnswered == questions.length) {
+
+            resultDiv.text("won" + winCount + "lost" + lossCount);
+            questionsAnswered = 0;
+        }
+        // Game is still on
+
+        else {
+            if (result) {
+                resultDiv.text("won");
+            } else {
+                resultDiv.text("lost");
+            }
+            setTimeout(initialiseQuestions(questions), 5000);
+            questionsAnswered++;
+        }
+          console.log(result);
+
     }
-    else{
-      questionDiv.text = "lost";
-    }
-
-  }
-}
-
-
     // Reset game
     function resetGame() {
         if (reset) {
-        showQuestion = setInterval(initialiseQuestions(questions[0]), 20000);
+            showQuestion = initialiseQuestions(questions);
             // Set the reset flag
-        reset = false;
+            reset = false;
 
         }
     }
 
-
+    function countDown() {
+      console.log(time);
+        time--;
+      if(time>=0){
+        $("#timer").text(time);
+      }
+      else{
+        //show right answer
+        clearInterval(showTimer);
+        showResult(false)
+      }
+    }
 });
+
+// function startQuiz(){
+//   clockRunning = true;
+//   showQuestion = setInterval(initialiseQuestions(questions), 1000);
+// }
+//
+// function stopQuiz(){
+//   clearInterval(showQuestion);
+//   clockRunning = false;
+// }
+//
+// function showAnswer(){
+//   clearInterval(showQuestion);
+//   clockRunning = false;
+//   showQuestion = setInterval(startQuiz, 2000);
+// }
+//
+// startQuiz();
