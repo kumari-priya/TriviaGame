@@ -67,14 +67,18 @@ $(document).ready(function() {
 
     ];
 
+// Hide all divs
+questionDiv.hide();
+resultDiv.hide();
+
     // Get the total number of questions
     totalQuestions = questions.length;
 
     // Create and add event listeners for questions
     function initialiseQuestions() {
-      // questionDiv.show();
-      // resultDiv.hide();
-        // $("#reset").hide();
+      questionDiv.show();
+      resultDiv.hide();
+        $("#reset").hide();
 
         var currentQuestion = questions[questionsAnswered];
         // Add question
@@ -99,13 +103,13 @@ showResult(true);
                 showResult(false);
             }
         });
+        $("#timer").text(30);
         clearInterval(showTimer);
         time = 30;
         showTimer =  setInterval(countDown, 1000);
-
-
     }
-//initialiseQuestions(questions);
+
+
 
     // Reset function
     $("#reset").on("click", function() {
@@ -117,9 +121,9 @@ lossCount = 0;
 
 
     function showResult(result) {
-      // questionDiv.hide();
-      // resultDiv.show();
-      // $("#reset").hide();
+      questionDiv.hide();
+      resultDiv.show();
+      $("#reset").hide();
         // All the questions got answered
         if (questionsAnswered == questions.length) {
           clearInterval(showTimer);
