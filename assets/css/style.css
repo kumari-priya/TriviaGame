@@ -1,5 +1,13 @@
 body{
-      /*background: #ebebe0 url("../images/starwar.jpg") no-repeat right top;*/*/
+      background: #ebebe0 url("../images/wall.jpg") no-repeat right top;*/*/
       /*color: #fff;*/
       font-family: 'Roboto', sans-serif;
+}
+#game{
+  height: 500px;
+  width: 600px;
+  margin : 50px auto;
+  border: solid 1px white;
+  background: white;
+  color: black;
 }

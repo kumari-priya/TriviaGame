@@ -71,8 +71,12 @@ $(document).ready(function() {
     totalQuestions = questions.length;
 
     // Create and add event listeners for questions
-    function initialiseQuestions(questionsArray) {
-        var currentQuestion = questionsArray[questionsAnswered];
+    function initialiseQuestions() {
+      // questionDiv.show();
+      // resultDiv.hide();
+        // $("#reset").hide();
+
+        var currentQuestion = questions[questionsAnswered];
         // Add question
         question.text(currentQuestion.question);
         // Add answere
@@ -89,58 +93,64 @@ $(document).ready(function() {
             var str1 = $(this).text();
             var str2 = questionDiv.attr("data-answer");
             if (str1 == str2) {
-                winCount++;
+
                 rightAnswer = true;
             } else {
-                lossCount++;
+
                 rightAnswer = false;
             }
             showResult(rightAnswer);
         });
         showTimer =  setInterval(countDown, 1000);
-
         console.log(rightAnswer);
         time = 30;
 
     }
-initialiseQuestions(questions);
+//initialiseQuestions(questions);
 
     // Reset function
-    $("#btnReset").on("click", function() {
-        resetGame()
+    $("#reset").on("click", function() {
+questionsAnswered = 0;
+winCount = 0;
+lossCount = 0;
+        resetGame();
     });
 
-    function showResult(result) {
 
+    function showResult(result) {
+      // questionDiv.hide();
+      // resultDiv.show();
+      // $("#reset").hide();
         // All the questions got answered
         if (questionsAnswered == questions.length) {
-
             resultDiv.text("won" + winCount + "lost" + lossCount);
-            questionsAnswered = 0;
+              $("#reset").text("Start Over").show();
+
         }
         // Game is still on
 
         else {
             if (result) {
                 resultDiv.text("won");
+                winCount++;
+
             } else {
                 resultDiv.text("lost");
+                lossCount++;
+
             }
-            setTimeout(initialiseQuestions(questions), 5000);
+
             questionsAnswered++;
+            setTimeout(initialiseQuestions, 5000);
+            //setTimeout(alert(questionsAnswered),2000);
         }
           console.log(result);
 
     }
     // Reset game
     function resetGame() {
-        if (reset) {
-            showQuestion = initialiseQuestions(questions);
-            // Set the reset flag
-            reset = false;
-
+            initialiseQuestions();
         }
-    }
 
     function countDown() {
       console.log(time);
@@ -155,21 +165,3 @@ initialiseQuestions(questions);
       }
     }
 });
-
-// function startQuiz(){
-//   clockRunning = true;
-//   showQuestion = setInterval(initialiseQuestions(questions), 1000);
-// }
-//
-// function stopQuiz(){
-//   clearInterval(showQuestion);
-//   clockRunning = false;
-// }
-//
-// function showAnswer(){
-//   clearInterval(showQuestion);
-//   clockRunning = false;
-//   showQuestion = setInterval(startQuiz, 2000);
-// }
-//
-// startQuiz();
