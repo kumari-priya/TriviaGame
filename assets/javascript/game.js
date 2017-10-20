@@ -34,45 +34,53 @@ $(document).ready(function() {
 
     // Questions Array
     var questions = [{
-            question: "In Aladdin, what is the name of Jasmine's pet tiger?",
-            choices: ["Rajah", "Bo", "Iago", "Jack"],
-            images: ["../images/Rajah.gif"],
-            answer: "Rajah"
+            question: "What is the name of the high school in High School Musical",
+            choices: ["East High School", "West High School", "North High School", "South High School"],
+            answer: "East High School"
         }, {
-            question: "In Peter Pan, Captain Hook had a hook on which part of his     body?",
-            choices: ["Right Foot", "Left Hand", "Left Foot", "Right Hand"],
-            answer: "Left Hand"
+            question: "Who said - If you keep on believing, the dream that you wish will come true.",
+            choices: ["Belle", "Cinderella", "Elsa", "Moana"],
+            answer: "Cinderella"
 
         }, {
-            question: "In the Lion King, where does Mufasa and his family live?",
-            choices: ["Rocky Mountain", "Forest", "Desert", "Pride Rock"],
-            answer: "Pride Rock"
+            question: "Which Disney movie was the first to have a soundtrack album?",
+            choices: ["Peter Pan", "Pirates of the Caribbean", "Snow White and the Seven Dwarfs", "Frozen"],
+            answer: "Snow White and the Seven Dwarfs"
 
         }, {
-            question: "In Beauty and the Beast, how many eggs does Gaston eat for    breakfast?",
-            choices: ["2 Dozen", "5 Dozen", "5000", "0"],
-            answer: "5 Dozen"
+            question: "What is the name of the young boy from Old Yeller?",
+            choices: ["Peter", "Travis Coates", "Mike", "Goofy"],
+            answer: "Travis Coates"
 
         }, {
-            question: "In Alice in Wonderland, what is the name of Alice’s kitten?",
-            choices: ["Dinah", "Sammie", "Kat", "Luna"],
-            answer: "Dinah"
+            question: "How many Academy Awards for Best Original Songs has Disney won?",
+            choices: ["20", "15", "12", "10"],
+            answer: "12"
 
         }, {
-            question: "After being on earth, where did Hercules first meet his   father Zeus?",
-            choices: ["Mount Olympus", "Greece", "In the Temple of Zeus", "Elysian   Fields"],
-            answer: "In the Temple of Zeus"
+            question: " What is the only Disney song to win a Grammy Award for Song of the Year?",
+            choices: ["A Whole New World", "Happy Song", "Melody of Spirit", "Let it go"],
+            answer: "A Whole New World"
 
         }, {
-            question: "During the ballroom scene of Beauty & the Beast, what color is Belle’s Gown?",
-            choices: ["Yellow", "Blue", "Gold", "White"],
-            answer: "Gold"
+            question: "What is the name of Elsa's sister?",
+            choices: ["Emma", "Anna", "Moana", "Rapenzul"],
+            answer: "Anna"
 
         }, {
-            question: "In Bambi, what word does the owl use to describe falling in love?",
-            choices: ["Whimsical", "Miserable", "Joyful", "Twitterpatted"],
-            answer: "Twitterpatted"
+            question: "Which 1998 Disney film was Lindsay Lohan’s film debut?",
+            choices: ["The Neighbour Trap", "The Brother Trap", "The Sister Trap", "The Parent Trap"],
+            answer: "The Parent Trap"
 
+        }, {
+            question: "What is the name of the bunny officer in Zootopia?",
+            choices: ["Pink", "Judy", "Luna", "Maya"],
+            answer: "Judy"
+
+        }, {
+            question: "who is Simba's father in the Lion King",
+            choices: ["Scar", "Nala", "Mufasa", "Pumbaa"],
+            answer: "Mufasa"
         }
 
     ];
@@ -136,6 +144,7 @@ $(document).ready(function() {
     });
 
 function gameOver(){
+    correctDiv.hide();
   clearInterval(showTimer);
   resultDiv.text("All done, here is how you did! ");
   correct.text(winCount);
@@ -172,7 +181,7 @@ gameOver();
             }
             questionsAnswered++;
             if (questionsAnswered == questions.length) {
-              correctDiv.hide();
+
               setTimeout(gameOver, 5000);
             }
             else{
