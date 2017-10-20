@@ -41,3 +41,11 @@ h1{
 .bold{
     font-weight: bold;
 }
+#reset{
+  width: 50%;
+  padding: 20px;
+  margin: 50px auto;
+  font-size: 20px;
+  font-weight: bold;
+
+}

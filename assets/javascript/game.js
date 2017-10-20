@@ -88,7 +88,7 @@ $(document).ready(function() {
     totalQuestions = questions.length;
 
     // Create and add event listeners for questions
-    function initialiseQuestions() {
+    function startGame() {
         questionDiv.show();
         timerDiv.show();
         resultDiv.hide();
@@ -176,7 +176,7 @@ gameOver();
               setTimeout(gameOver, 5000);
             }
             else{
-              setTimeout(initialiseQuestions, 5000);
+              setTimeout(startGame, 5000);
             }
         }
         console.log(result);
@@ -185,7 +185,7 @@ gameOver();
     // Reset game
     function resetGame() {
         summary.hide();
-        initialiseQuestions();
+        startGame();
     }
 
     function countDown() {
