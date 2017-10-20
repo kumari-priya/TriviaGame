@@ -88,22 +88,21 @@ $(document).ready(function() {
         option4.text(currentQuestion.choices[3]);
 
         $('.options').on('click', function() {
+          console.log("in");
           clearInterval(showTimer);
-
+          console.log("out");
             var str1 = $(this).text();
             var str2 = questionDiv.attr("data-answer");
             if (str1 == str2) {
-
-                rightAnswer = true;
+showResult(true);
             } else {
-
-                rightAnswer = false;
+                showResult(false);
             }
-            showResult(rightAnswer);
         });
-        showTimer =  setInterval(countDown, 1000);
-        console.log(rightAnswer);
+        clearInterval(showTimer);
         time = 30;
+        showTimer =  setInterval(countDown, 1000);
+
 
     }
 //initialiseQuestions(questions);
@@ -123,6 +122,7 @@ lossCount = 0;
       // $("#reset").hide();
         // All the questions got answered
         if (questionsAnswered == questions.length) {
+          clearInterval(showTimer);
             resultDiv.text("won" + winCount + "lost" + lossCount);
               $("#reset").text("Start Over").show();
 
@@ -139,10 +139,8 @@ lossCount = 0;
                 lossCount++;
 
             }
-
             questionsAnswered++;
             setTimeout(initialiseQuestions, 5000);
-            //setTimeout(alert(questionsAnswered),2000);
         }
           console.log(result);
 

@@ -11,3 +11,9 @@ body{
   background: white;
   color: black;
 }
+#reset{
+  padding: 20px;
+  border: solid 1px black;
+  margin: 20px;
+  width: 200px;
+}
