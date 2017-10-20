@@ -8,6 +8,8 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
+<link href="https://fonts.googleapis.com/css?family=Lobster|Volkhov|Varela+Round" rel="stylesheet">
+
     <!-- Custom CSS -->
     <link rel="stylesheet" href="./assets/css/style.css">
     <title>Trivia Game!</title>
@@ -20,23 +22,27 @@
             <div class="col-md-12">
 <div id="game">
   <h1>Trivia Game!</h1>
-  <div id="resultDiv">
 
-  </div>
-  <button id="reset">Start</button>
+  <div id="timerDiv" class="lead"> Time Remaining : <span id="timer">30</span> Seconds</div>
   <div id="questionDiv">
-<div> Time remaining <span id="timer">30</span> Seconds</div>
-<div><span id="question"></span></div>
-<div><button id="option1" class="options"></button></div>
-<div><button id="option2" class="options"></button></div>
-<div><button id="option3" class="options"></button></div>
-<div><button id="option4" class="options"></button></div>
+<div class="lead"><span id="question"></span></div>
+<div><button id="option1" class="trivia btn btn-info"></button></div>
+<div><button id="option2" class="trivia btn btn-info"></button></div>
+<div><button id="option3" class="trivia btn btn-info"></button></div>
+<div><button id="option4" class="trivia btn btn-info"></button></div>
 
 </div>
-
-
-
-
+<h2 id="resultDiv">
+</h2>
+<div id="summary">
+  <p>Correct Answers : <span id="correct"></span></p>
+  <p>Incorrect Answers : <span id="incorrect"></span></p>
+  <p>Unanswered : <span id="unanswered"></span></p>
+</div>
+<div id="correctDiv">
+  <p>The Correct Answer was : <span id="correct-answer"></span></p>
+</div>
+  <button id="reset" class="btn-primary btn-lg">Start</button>
 </div>
 
             </div>

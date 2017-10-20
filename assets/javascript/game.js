@@ -4,6 +4,7 @@ $(document).ready(function() {
     var reset = false;
     var winCount = 0;
     var lossCount = 0;
+    var noAnswer = 0;
     var totalQuestions = 0;
     var questionsAnswered = 0;
     var questionDiv;
@@ -14,13 +15,22 @@ $(document).ready(function() {
 
 
     // Get the htm elements
-    questionDiv = $("#questionDiv");
-    resultDiv = $("#resultDiv");
-    option1 = $("#option1");
-    option2 = $("#option2");
-    option3 = $("#option3");
-    option4 = $("#option4");
-    question = $("#question");
+  var  questionDiv = $("#questionDiv");
+  var  resultDiv = $("#resultDiv");
+  var  option1 = $("#option1");
+  var  option2 = $("#option2");
+  var  option3 = $("#option3");
+  var  option4 = $("#option4");
+  var  question = $("#question");
+  var  timerDiv = $("#timerDiv");
+  var  summary = $("#summary");
+  var  correctDiv = $("#correctDiv");
+  var  correct = $("#correct");
+  var  incorrect = $("#incorrect");
+  var  unanswered=  $("#unanswered");
+  var reset =   $("#reset");
+  var timer =   $("#timer");
+  var correctAnswer = $("#correct-answer");
 
     // Questions Array
     var questions = [{
@@ -70,6 +80,9 @@ $(document).ready(function() {
 // Hide all divs
 questionDiv.hide();
 resultDiv.hide();
+timerDiv.hide();
+summary.hide();
+correctDiv.hide();
 
     // Get the total number of questions
     totalQuestions = questions.length;
@@ -77,8 +90,11 @@ resultDiv.hide();
     // Create and add event listeners for questions
     function initialiseQuestions() {
       questionDiv.show();
+      timerDiv.show();
       resultDiv.hide();
-        $("#reset").hide();
+      summary.hide();
+      correctDiv.hide();
+      reset.hide();
 
         var currentQuestion = questions[questionsAnswered];
         // Add question
@@ -90,23 +106,24 @@ resultDiv.hide();
         option2.text(currentQuestion.choices[1]);
         option3.text(currentQuestion.choices[2]);
         option4.text(currentQuestion.choices[3]);
-
-        $('.options').on('click', function() {
-          console.log("in");
-          clearInterval(showTimer);
-          console.log("out");
-            var str1 = $(this).text();
-            var str2 = questionDiv.attr("data-answer");
-            if (str1 == str2) {
-showResult(true);
-            } else {
-                showResult(false);
-            }
-        });
-        $("#timer").text(30);
+        timer.text(30);
         clearInterval(showTimer);
         time = 30;
         showTimer =  setInterval(countDown, 1000);
+    }
+
+    $(document).on("click", ".trivia", displayResult);
+
+    function displayResult(){
+      correctDiv.hide();
+      clearInterval(showTimer);
+        var str1 = $(this).text();
+        var str2 = questionDiv.attr("data-answer");
+        if (str1 == str2) {
+          showResult("won");
+        } else {
+          showResult("lost");
+        }
     }
 
 
@@ -116,33 +133,44 @@ showResult(true);
 questionsAnswered = 0;
 winCount = 0;
 lossCount = 0;
-        resetGame();
+noAnswer =0;
+resetGame();
     });
 
 
     function showResult(result) {
+      console.log("In result"+questionsAnswered);
       questionDiv.hide();
       resultDiv.show();
-      $("#reset").hide();
+      reset.hide();
         // All the questions got answered
         if (questionsAnswered == questions.length) {
           clearInterval(showTimer);
-            resultDiv.text("won" + winCount + "lost" + lossCount);
-              $("#reset").text("Start Over").show();
+              resultDiv.text("All done, here is how you did! ");
+              correct.text(winCount);
+              incorrect.text(lossCount);
+              unanswered.text(noAnswer);
+              summary.show();
+              reset.text("Start Over").show();
 
         }
         // Game is still on
-
         else {
-            if (result) {
-                resultDiv.text("won");
+            if (result=="won") {
+                resultDiv.text("Correct!");
                 winCount++;
 
-            } else {
-                resultDiv.text("lost");
+            } else if(result == "lost"){
+              correctDiv.show();
+                resultDiv.text("Wrong!");
+                correctAnswer.text(questionDiv.attr("data-answer"));
                 lossCount++;
 
             }
+            else if(result == "no"){
+                resultDiv.text("Out of Time!");
+                noAnswer++;
+              }
             questionsAnswered++;
             setTimeout(initialiseQuestions, 5000);
         }
@@ -151,19 +179,20 @@ lossCount = 0;
     }
     // Reset game
     function resetGame() {
-            initialiseQuestions();
+      summary.hide();
+      initialiseQuestions();
         }
 
     function countDown() {
       console.log(time);
         time--;
       if(time>=0){
-        $("#timer").text(time);
+        timer.text(time);
       }
       else{
         //show right answer
         clearInterval(showTimer);
-        showResult(false)
+        showResult("no")
       }
     }
 });
