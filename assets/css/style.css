@@ -29,9 +29,15 @@ h1{
   font-weight: bold;
   font-family: 'Volkhov', serif;
 }
-#timer{
-  font-weight: bold;
-}
-#summary, #correctDiv{
+#timerDiv{
   font-size: 18px;
+}
+#summary{
+  font-size: 18px;
+}
+#correctDiv{
+  font-size: 18px;
+}
+.bold{
+    font-weight: bold;
 }
